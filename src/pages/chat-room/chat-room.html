@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      {{name}}
+    </ion-title>
+    <ion-buttons end>
+
+        <button ion-button (click)="verEncargados()">
+            <ion-icon name="person"></ion-icon>
+          </button>
+
+        <button ion-button (click)="verObjetivos()">
+            <ion-icon name="checkmark"></ion-icon>
+          </button>
+
+            <button ion-button (click)="popover()">
+                <ion-icon name="menu"></ion-icon>
+              </button>
+      </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content #content class="chat-window">
+  <ion-grid padding>
+    <ion-row *ngFor="let message of messages; let last=last;">
+
+      <ion-col col-9 *ngIf="message.from !== nickname" class="message" [ngClass]="{'my_message': message.from === nickname, 'other_message': message.from !== nickname}">
+        <span class="user_name">{{ message.from }}:
+
+        </span><br>
+        <span>{{ message.text }}</span>
+        <div class="time">{{message.created_at | date:'dd.MM / hh:MM'}}
+
+        </div>
+      </ion-col>
+
+      <ion-col offset-3 col-9 *ngIf="message.from === nickname" class="message" [ngClass]="{'my_message': message.from === nickname, 'other_message': message.from !== nickname}">
+        <!--<span class="user_name-2">{{ message.from }}:</span><br-->
+        <span>{{ message.text }}</span>
+        <div class="time-2">{{message.created_at | date:'dd.MM hh:MM'}}
+
+        </div>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-row class="message_row">
+      <ion-col col-9>
+        <ion-item no-lines>
+          <ion-input #input type="text" autofocus placeholder="Message" [(ngModel)]="message"></ion-input>
+        </ion-item>
+      </ion-col>
+        <ion-col col-3>
+          <button ion-button clear color="secondary" (click)="sendMessage(input)" [disabled]="message === ''">
+          <ion-icon name="md-send"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+
+  <ion-grid>
+    <ion-row>
+        <ion-col col-2.35>
+          <button ion-button clear><ion-icon name="logo-reddit"></ion-icon></button>
+        </ion-col>
+        <ion-col col-2.35>
+          <button ion-button clear><ion-icon name="logo-youtube"></ion-icon></button>
+        </ion-col>
+        <ion-col col-2.35>
+          <button ion-button clear><ion-icon name="image"></ion-icon></button>
+        </ion-col>
+        <ion-col col-2.35>
+            <button ion-button clear><ion-icon name="document"></ion-icon></button>
+        </ion-col>
+        <ion-col col-2.35>
+            <button ion-button clear><ion-icon name="volume-up"></ion-icon></button>
+        </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+  </ion-toolbar>
+</ion-footer>

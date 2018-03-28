@@ -1,0 +1,52 @@
+<!--
+  Generated template for the ObjetivoPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Nuevo Objetivo    </ion-title>
+        <ion-buttons end>
+          <button color="danger" ion-button (click)="atras()">
+            Volver
+          </button>
+        </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+<ion-list [formGroup]="objetivo">
+<ion-item>
+  <ion-label floating>Nombre del Objetivo</ion-label>
+  <ion-input [value]="objetivo.get('nombre').value" formControlName="nombre" type="text"></ion-input>
+</ion-item>
+
+  
+  <div formArrayName="tareas">
+    <div *ngFor="let tarea of tareas.controls; let i = index" [formGroupName]="i">
+
+      <ion-item>
+          <ion-label floating>Nombre de la tarea</ion-label>
+          <ion-input [value]="tarea.nombre" formControlName="nombre" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Encargado de la Tarea</ion-label>
+        <ion-select interface="popover" formControlName="encargado">
+          <ion-option [value]="miembro.id" *ngFor="let miembro of miembros">{{miembro.username}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <button ion-button color="danger" (click)="eliminarTarea(i)">Eliminar</button>
+
+    </div>
+  </div>
+  <button ion-button (click)="agregarTarea()">Agregar Tarea</button>
+ 
+ <!--Boton de listo--> <button ion-button [disabled]="objetivo.invalid || objetivo.get('tareas').invalid" color="secondary" (click)="listo()">Guardar</button>
+</ion-list>
+</ion-content>

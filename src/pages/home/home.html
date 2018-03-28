@@ -1,0 +1,32 @@
+<ion-header no-border>
+  <ion-navbar>
+    <ion-title>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content text-center>
+
+  <img src="../../assets/img/Ti_LOG-IN.png" align=center class="img-title" />
+
+  <ion-list no-lines>
+
+    <ion-item>
+      <ion-label floating text-center center>Nombre de usuario</ion-label>
+      <ion-input type="text" #username text-center></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating text-center>Contraseña</ion-label>
+      <ion-input type="password" #password text-center></ion-input>
+    </ion-item>
+
+  </ion-list>
+
+  <div padding>
+    <button ion-button color="primary" class="boton" block (click) = "Login()">Inicia sesión</button>
+    <button ion-button color="primary" class="boton boton_2" block (click) = "GoToRegister()">o crea una cuenta nueva</button>
+  </div>
+
+
+</ion-content>

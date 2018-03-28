@@ -1,0 +1,62 @@
+<!--
+  Generated template for the RegisterPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header no-border>
+
+  <ion-navbar>
+    <ion-title> </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content text-center>
+  <img src="../../assets/img/Ti_SIGN-UP.png" align=center class="img-title" />
+
+ <ion-list [formGroup]="Registro" no-lines text-center>
+
+
+    <ion-item>
+      <ion-label floating text-center>Nombre y Apellido</ion-label>
+      <ion-input formControlName="nombre" type="text" #nombre [(ngModel)]="member.name" text-center></ion-input>
+    </ion-item>
+	  <ion-item *ngIf="Registro.get('nombre').errors && Registro.get('nombre').dirty">
+      	<p color="danger" *ngIf="Registro.get('nombre').hasError('required')">Tienes que llenar este campo</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating  text-center>Correo Electrónico</ion-label>
+      <ion-input text-center formControlName="email" type="email" #email [(ngModel)]="member.email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label text-center floating>Nombre de Usuario</ion-label>
+      <ion-input text-center formControlName="usuario" type="text" #username [(ngModel)]="member.username"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label text-center floating>Contraseña</ion-label>
+      <ion-input text-center formControlName="password" type="password" #password [(ngModel)]="member.password"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label text-center floating>Repite la contraseña</ion-label>
+      <ion-input text-center formControlName="passwordConfirmation" type="password" #password2 ></ion-input>
+    </ion-item>
+
+    <ion-item text-center *ngIf="Registro.get('password') && Registro.get('passwordConfirmation')">
+      <p color="Danger" *ngIf="Registro.get('password').value!=Registro.get('passwordConfirmation').value">Las contraseñas no coinciden</p>
+    </ion-item>
+
+    <ion-item text-center>
+      <button text-center ion-button class="boton" color="primary" block (click) = "addMember(member)">Registrarse</button>
+    </ion-item>
+
+  </ion-list>
+
+
+
+</ion-content>

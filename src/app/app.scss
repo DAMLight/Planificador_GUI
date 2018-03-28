@@ -1,0 +1,85 @@
+// http://ionicframework.com/docs/theming/
+
+
+// App Global Sass
+// --------------------------------------------------
+// Put style rules here that you want to apply globally. These
+// styles are for the entire app and not just one component.
+// Additionally, this file can be also used as an entry point
+// to import other Sass files to be included in the output CSS.
+//
+// Shared Sass variables, which can be used to adjust Ionic's
+// default Sass variables, belong in "theme/variables.scss".
+//
+// To declare rules for a specific mode, create a child rule
+// for the .md, .ios, or .wp mode classes. The mode class is
+// automatically applied to the <body> element in the app.
+
+  .boton,.boton:active,.boton:visited{
+    min-height:3.8em;
+    border-radius: 6px;
+    box-shadow: none;
+    font-weight:lighter;
+    margin-bottom: 15px;
+  }
+
+  .boton:hover,.boton_2:hover{
+    box-shadow: none;
+    background: map-get($colors,secondary);
+    color:#fff,
+  }
+
+  .boton_2{
+    background:#fff !important;
+    border:2px solid map-get($colors, secondary) !important;
+    color:map-get($colors, secondary) !important;
+  }
+
+  .salir_btn{
+    border-color: map-get($colors, danger) !important;
+    color: map-get($colors, danger) !important;
+  }
+
+  .salir_btn:hover{
+    background: map-get($colors, danger) !important;
+    color: #fff !important;
+  }
+
+  ion-list:before{background:none;}
+
+  img{
+    max-width:30%;
+  }
+
+  .toolbar-background-md{
+    background: #fff !important;
+    border:0 !important;
+  }
+
+  ion-header:after{background:none !important;}
+
+  .img-title{
+    position:relative;
+    margin:7em 0 3em 0 !important;
+  }
+
+.item-input ion-input, .item-input ion-textarea {
+  border-bottom:1px solid #000;
+  padding:8em auto;
+}
+
+.proyectos-listados{
+  box-shadow: none;
+  display:inline-block;
+  width:48%;
+  margin:1vw 1%;
+  height:40vw;
+  border-radius: 7px;
+  white-space:pre-wrap;
+  line-height: 5vw;
+}
+
+.proyectos-listados:hover,.proyectos-listados:active{
+  background: map-get($colors, secondary) !important;
+  box-shadow:none;
+}

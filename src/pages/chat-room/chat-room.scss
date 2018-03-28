@@ -1,0 +1,48 @@
+page-chat-room {
+    .user_name {
+        color: #666;
+        font-style: italic;
+    }
+
+    .user_name-2 {
+        color: #9BB8CE;
+        font-style: italic;
+    }
+
+    .message {
+        padding: 10px !important;
+        transition: all 250ms ease-in-out !important;
+        margin-bottom: 4px !important;
+    }
+    .my_message {
+        background: color($colors,primary);
+        color: #fff !important;
+        //border-left:4px solid #A7C9EA;
+        border-radius: 15px 15px 0 15px !important;
+    }
+    .other_message {
+        background: #B1BCC4;
+        color: #000 !important;
+        //border-left:4px solid #E5C7A1;
+        border-radius: 15px 15px 15px 0 !important;
+    }
+    .time,.time-2 {
+        color: #777;
+        float: right;
+        font-size: small;
+        font-style: italic;
+    }
+
+    .time-2{
+      color:#9BB8CE;
+    }
+
+    .message_row {
+        background-color: #fff;
+    }
+
+    .chat-window{
+      background: url(../assets/img/BG-14.png);
+      background-size: cover;
+    }
+}

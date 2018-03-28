@@ -1,0 +1,24 @@
+<!--
+  Generated template for the ObjectivesListPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Objetivos de {{name}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <ion-list>
+        <button ion-item *ngFor="let objetivo of objetivos" (click)="verTareas(objetivo)">
+          {{ objetivo.objective + ' ' +(objetivo.percentage | number:'1.0-2' )}} % 
+        </button>  
+    </ion-list>
+
+</ion-content>
