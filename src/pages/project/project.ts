@@ -22,18 +22,20 @@ export class ProjectPage
   name:string;
   miembro:any;
   leader:boolean;
+  a:string;
   constructor(private storage:Storage, private server:DireccionServer, private http:Http, public navCtrl: NavController, public navParams: NavParams) 
   {
     this.proyecto={};
     this.miembro={};
     this.leader=false;
-
+    
   }
 
   ionViewWillLoad()
   {
     this.id=this.navParams.get('id');
     this.obtenerProyecto(this.id);
+   
   }
 
   obtenerProyecto(id:number)
@@ -45,11 +47,13 @@ export class ProjectPage
         this.leader=res;
       }
     )
-    this.http.get(this.server.UrlLocal+'proyecto/'+id)
+    this.http.get(this.server.Url+'proyecto/'+id)
     .toPromise()
     .then(respuesta=>
     {
       this.proyecto=respuesta.json();
+      
+     
     });
   }
 
