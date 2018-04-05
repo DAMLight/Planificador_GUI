@@ -22,7 +22,7 @@ import { ObjectivesListPage} from '../pages/objectives-list/objectives-list';
 import { TaskListPage } from '../pages/task-list/task-list';
 import { ObjetivoPage} from '../pages/objetivo/objetivo';
 import { SubMenuPage } from '../pages/sub-menu/sub-menu';
-const config: SocketIoConfig = { url: 'http://chatserver.fr.openode.io', options: {} };
+const config: SocketIoConfig = { url: 'https://chatserver-takeuko.c9users.io/', options: {} };
 
 @NgModule({
   declarations: [
