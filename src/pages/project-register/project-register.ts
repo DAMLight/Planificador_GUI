@@ -1,4 +1,3 @@
-import { ObjetivoPage } from './../objetivo/objetivo';
 import { DireccionServer } from './../global';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonicPage, NavController,AlertController, NavParams, Slides, Chip, ModalController, Modal } from 'ionic-angular';
@@ -128,7 +127,7 @@ export class ProjectRegisterPage
 
   ventanaObjetivo(objetivoParametro:Objective, index:number)
   {
-    const paginaObjetivo: Modal = this.modal.create(ObjetivoPage, {miembros: this.project.get('miembros').value, objetivo:objetivoParametro, index:index});
+    const paginaObjetivo: Modal = this.modal.create('ObjetivoPage', {miembros: this.project.get('miembros').value, objetivo:objetivoParametro, index:index});
     paginaObjetivo.present();
 
 
