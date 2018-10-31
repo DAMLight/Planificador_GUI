@@ -5,7 +5,7 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-
+import { OneSignal } from '@ionic-native/onesignal';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import {FirstPage} from '../pages/first/first';
@@ -22,7 +22,7 @@ import { ObjectivesListPage} from '../pages/objectives-list/objectives-list';
 import { TaskListPage } from '../pages/task-list/task-list';
 import { ObjetivoPage} from '../pages/objetivo/objetivo';
 import { SubMenuPage } from '../pages/sub-menu/sub-menu';
-const config: SocketIoConfig = { url: 'http://chatserver.fr.openode.io', options: {} };
+const config: SocketIoConfig = { url: 'https://chatserver-takeuko.c9users.io/', options: {} };
 
 @NgModule({
   declarations: [
@@ -71,6 +71,7 @@ const config: SocketIoConfig = { url: 'http://chatserver.fr.openode.io', options
 
   ],
   providers: [
+    OneSignal,
     StatusBar,
     SplashScreen,
     DireccionServer,
