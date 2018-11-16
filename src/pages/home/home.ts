@@ -1,6 +1,6 @@
 import { DireccionServer } from './../global';
 import { Component, ViewChild } from '@angular/core';
-import { NavController, AlertController, LoadingController } from 'ionic-angular';
+import { Nav, AlertController, LoadingController, NavController } from 'ionic-angular';
 import { Http, Headers } from '@angular/http';
 import { RegisterPage } from '../register/register'
 import { Home2Page } from '../home2/home2';
@@ -20,19 +20,26 @@ export class HomePage
   data:any={};
 	@ViewChild('username') username;
   @ViewChild('password') password;
+
   loginUrl:string=this.Url.Url+'member/login';
   private headers = new Headers({'Content-Type': 'application/json; charset=utf-8;'});
   
 
 
-  constructor(public Url:DireccionServer, public loadingCtrl:LoadingController,public navCtrl: NavController, public alertCtrl: AlertController, public http: Http, private storage:Storage) 
+  constructor(public Url:DireccionServer, 
+    public loadingCtrl:LoadingController,
+    public alertCtrl: AlertController,
+     public http: Http, 
+     private storage:Storage,
+     public navctrl: NavController) 
   {
+    
     this.storage.get('member').then(
       member=>
       {
         if(member!=null)
         {
-          this.navCtrl.setRoot(Home2Page);
+          this.navctrl.setRoot(Home2Page);
         }
       }
 
@@ -85,7 +92,7 @@ export class HomePage
     if(res.status===200)
     {
         this.storage.set('member', res.json());
-        this.navCtrl.setRoot(Home2Page);
+        this.navctrl.setRoot(Home2Page);
     }
     else if(res.status===210)
     {
@@ -110,6 +117,6 @@ export class HomePage
   }
   GoToRegister()
   {
-     this.navCtrl.push(RegisterPage);
+     this.navctrl.push(RegisterPage);
   }
 }

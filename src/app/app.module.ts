@@ -1,3 +1,4 @@
+
 import { ProjectPage } from './../pages/project/project';
 import { DireccionServer } from './../pages/global';
 import { BrowserModule } from '@angular/platform-browser';
@@ -14,7 +15,7 @@ import { RegisterPage } from '../pages/register/register';
 import { Home2Page } from '../pages/home2/home2';
 import { ProjectRegisterPage } from '../pages/project-register/project-register';
 import {ProyectosPage} from '../pages/proyectos/proyectos';
-import { SocketIoModule, SocketIoConfig } from 'ng-socket-io';
+
 import { IonicStorageModule } from '@ionic/storage';
 import { ChatRoomPage } from '../pages/chat-room/chat-room';
 import { UsersListPage} from '../pages/users-list/users-list';
@@ -22,7 +23,10 @@ import { ObjectivesListPage} from '../pages/objectives-list/objectives-list';
 import { TaskListPage } from '../pages/task-list/task-list';
 import { ObjetivoPage} from '../pages/objetivo/objetivo';
 import { SubMenuPage } from '../pages/sub-menu/sub-menu';
-const config: SocketIoConfig = { url: 'http://chatserver.fr.openode.io', options: {} };
+import { HttpClientModule } from '@angular/common/http';
+import { OneSignal } from '@ionic-native/onesignal';
+import { NotificacionesProvider } from '../providers/notificaciones/notificaciones';
+
 
 @NgModule({
   declarations: [
@@ -48,8 +52,8 @@ const config: SocketIoConfig = { url: 'http://chatserver.fr.openode.io', options
       backButtonText: '',
       backButtonIcon: 'arrow-back',
     }),
+    HttpClientModule ,
     HttpModule,
-    SocketIoModule.forRoot(config),
     IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
@@ -67,14 +71,17 @@ const config: SocketIoConfig = { url: 'http://chatserver.fr.openode.io', options
     TaskListPage,
     ObjetivoPage,
     SubMenuPage,
-    ProjectPage
-
+    ProjectPage,
+    
   ],
   providers: [
+    OneSignal,
     StatusBar,
     SplashScreen,
     DireccionServer,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    ChatRoomPage,
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    NotificacionesProvider
   ]
 })
 export class AppModule {}

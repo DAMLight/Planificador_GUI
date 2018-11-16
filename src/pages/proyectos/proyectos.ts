@@ -31,6 +31,8 @@ export class ProyectosPage
       val=>
       {
         this.miembro=val;
+        console.log("cargando mi nombre");
+        console.log(this.miembro['username']);
         this.consultarProyectos(val['id']);
       }
     );
@@ -38,7 +40,8 @@ export class ProyectosPage
 
   goToChatRoom(projectId)
   {
-    this.navCtrl.push(ChatRoomPage, {data:projectId, nickName:this.miembro['username']});
+    
+    this.navCtrl.push(ChatRoomPage, {data:projectId, nickname:this.miembro['username']});
     
   }
 

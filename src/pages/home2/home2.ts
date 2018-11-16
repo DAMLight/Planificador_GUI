@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Socket } from 'ng-socket-io';
 import {ChatRoomPage} from '../chat-room/chat-room';
 import {ProyectosPage} from '../proyectos/proyectos';
 import {Storage} from '@ionic/storage';
@@ -21,7 +20,7 @@ export class Home2Page
 	public nom:string;
   public ema:string;
   nickname='';
-  constructor(public navCtrl: NavController, public storage:Storage, private socket:Socket) 
+  constructor(public navCtrl: NavController, public storage:Storage) 
   {
     this.storage.get('member').then(val=>this.nom=val['name']);
   }
