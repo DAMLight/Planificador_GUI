@@ -15,8 +15,9 @@ export class DireccionServer {
 
   public UrlLocal:string='http://192.168.1.59/planificador-backend/public/';
   public UrlSendMessage= this.UrlLocal + 'proyecto/chats';
-  public UrlGetMessage = this.UrlLocal + 'proyecto/chats/mensaje/';
-  
+  public UrlGetMessages = this.UrlLocal + 'proyecto/chats/mensaje/';
+  public UrlGetNewMessage = this.UrlLocal + 'proyecto/chats/newMensaje/';
+  public UrlGetOldMessage = this.UrlLocal + 'proyecto/chats/getOldMessage';
   
   //public Url:string= 'http://192.168.250.30/planificador-backend/public/';
   public Url:string= 'http://192.168.1.59/planificador-backend/public/index.php/';

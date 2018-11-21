@@ -4,13 +4,15 @@ import { ProjectPage } from './../project/project';
 import { Component,NgZone , ViewChild, ChangeDetectorRef  } from '@angular/core';
 import { PopoverController ,App, NavController, IonicPage, NavParams, ToastController, Content } from 'ionic-angular';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable  } from 'rxjs';
 import {Storage} from '@ionic/storage';
 import { UsersListPage} from '../users-list/users-list';
 import { ObjectivesListPage} from '../objectives-list/objectives-list';
 import { SubMenuPage } from '../sub-menu/sub-menu';
 import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
+import 'rxjs/add/observable/interval';
+import { Subscription } from "rxjs/Subscription";
  
 @Injectable()
 @Component({
@@ -21,13 +23,17 @@ export class ChatRoomPage {
   public messages = [];
   nickname = '';
   message = '';
- projectId:number;
- name:string;
- leader:boolean;
- leaderId:number;
- member:any;
- cargado:boolean;
- private headers = new Headers({'Content-Type': 'application/json; charset=utf-8;'});
+  projectId:number;
+  name:string;
+  leader:boolean;
+  leaderId:number;
+  member:any;
+  cargado:boolean;
+  ultimoMensaje:number;
+  primerMensaje:number;
+  skipMessage = 10;
+  MensajeNuevo: Subscription;
+  estadoMensaje: String;
 
  @ViewChild('content') content:Content;
  @ViewChild('input') input;
@@ -45,14 +51,15 @@ export class ChatRoomPage {
     public ngZone: NgZone) 
   {
    
-    this.notificacion.autocompleteObserver.subscribe((data) =>{
+    /* this.notificacion.autocompleteObserver.subscribe((data) =>{
       ngZone.run(()=>
       {
-        this.recibirMensaje(data);
+      //  this.recibirMensaje(data);
       })
      
-    });
+    }); */
     this.cargado = false;
+    
     this.nickname = this.navParams.get('nickname');
     this.projectId=this.navParams.get('data')['id_proyecto'];
     this.VerMensajes(this.projectId);
@@ -81,20 +88,20 @@ export class ChatRoomPage {
 
     );
     this.name=this.name.toUpperCase();
- /*    this.getMessages().subscribe(message => {
-      this.messages.push(message);
-    }); */
-   
+    
   }
 
   VerMensajes(id)
   {
-    this.global.Recibir (this.global.UrlGetMessage+id)
+    this.global.Recibir (this.global.UrlGetMessages+id)
     .then(result =>{
       this.asignarMensajes(result)
       .then(res =>
-        {
-          console.log(res);
+        { 
+            this.scrollDown(0);
+            this.MensajeNuevo = Observable.interval(1500).subscribe(()=>{
+            this.recibirMensajeNuevo();
+            });
           
         })    
     },
@@ -107,12 +114,21 @@ export class ChatRoomPage {
   }
 
   asignarMensajes(mensajes)
-  {
+  { 
     return new Promise((resolve, reject)=>
     {
-      this.messages= mensajes as Array<any>;
-      resolve("asignados");
+      if(Object.keys(mensajes).length>0)
+      {
+        this.messages= mensajes as Array<any>;
+        this.primerMensaje = this.messages[0]['id'];
+        this.ultimoMensaje = this.messages[this.messages.length - 1]['id'];
+        resolve("asignados");
+
+      }else
+      resolve("no hay mensajes");
     })
+
+
   }
 
 
@@ -129,7 +145,7 @@ export class ChatRoomPage {
   
   sendMessage() 
   {  
-    //this.input.setFocus();
+    this.input.setFocus();
     this.global.Enviar(this.global.UrlSendMessage,
       JSON.stringify({text:this.message, 
         chat_id:this.projectId, 
@@ -148,15 +164,37 @@ export class ChatRoomPage {
           })
   }
 
-  recibirMensaje(mensaje)
+  recibirMensajeNuevo()
   {
- 
-    this.messages.push({chat: mensaje.chat, from: mensaje.from ,text: mensaje.text});
-    this.scrollDown(300);
+    this.global.Recibir(this.global.UrlGetNewMessage+this.projectId)
+    .then(data =>
+      {
+        
+          if(this.ultimoMensaje < data['id'])
+          {
+            let scrollbot = false;
+            if(this.scrollEnFooter())
+            {
+              this.messages.push(data);
+              this.scrollDown(300);
+            }else
+            this.messages.push(data);
+               
+            this.ultimoMensaje = data['id'];
+            
+          }
+      })
   }
 
 
-
+  scrollEnFooter()
+  {
+    let posicionScroll = (this.content.getContentDimensions().scrollHeight) - (this.content.scrollTop);
+      if(posicionScroll < 360)
+          return true;
+        else
+    return false
+  }
 
   scrollDown(tiempo)
   {
@@ -180,7 +218,7 @@ export class ChatRoomPage {
   }
  
   ionViewWillLeave() {
-    
+    this.MensajeNuevo.unsubscribe();
   }
  
   joinChat() 
@@ -192,13 +230,46 @@ export class ChatRoomPage {
   ionViewDidLoad() 
   {
     
-    this.content.ionScroll.subscribe((data)=>{
-      console.log("termino")
-      console.log(data);
-    });
-    console.log(this.nickname);
+  
 
   }
+
+  cargarMensajesAnteriores(infiniteScroll)
+  {
+    
+    console.log(this.skipMessage);
+    this.global.Enviar(this.global.UrlGetOldMessage,
+      {
+        id:this.projectId,
+        skip: this.skipMessage
+      })
+      .then(data=>
+      {
+        this.skipMessage +=5;
+        let max =  Object.keys(data).length;
+
+        if(max>0)
+      { 
+          setTimeout(() => {
+          console.log(this.content.getContentDimensions());
+          
+          for(let i = max-1; i >= 0; i--)
+          {
+            this.messages.unshift(data[i]);    
+          }
+          console.log(this.primerMensaje);
+          
+          this.primerMensaje = data[0]['id'];
+          infiniteScroll.complete();
+          },500);
+          
+      }else
+      infiniteScroll.complete();
+      })
+
+  }
+
+
   showToast(msg) {
     let toast = this.toastCtrl.create({
       message: msg,

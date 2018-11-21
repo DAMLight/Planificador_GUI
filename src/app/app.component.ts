@@ -41,7 +41,7 @@ export class MyApp {
     //  this.chat.recibirMensaje(jsonData.payload.additionalData);
       
     })
-   
+    
     this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.Notification);
     this.oneSignal.handleNotificationOpened()
     .subscribe(jsonData => {

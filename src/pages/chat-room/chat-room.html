@@ -21,14 +21,18 @@
 </ion-header>
 
 <ion-content #content class="chat-window">
+    <ion-infinite-scroll position="top" (ionInfinite)="cargarMensajesAnteriores($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
   <ion-grid padding>
-    <ion-row *ngFor="let message of messages; let last=last;">
+    
+    <ion-row *ngFor="let message of messages; let last=last; let i= index">
       <span *ngIf="last && !cargado">{{scrollDown(0)}}</span> 
       <ion-col col-9 *ngIf="message.from !== nickname" class="message" [ngClass]="{'my_message': message.from === nickname, 'other_message': message.from !== nickname}">
         <span class="user_name">{{ message.from }}:
 
         </span><br>
-        <span>{{ message.text }}</span>
+        <span >{{ message.text }}</span>
         <div class="time">{{message.created_at | date:'dd.MM / hh:MM'}}
 
         </div>
@@ -36,15 +40,16 @@
 
       <ion-col offset-3 col-9 *ngIf="message.from === nickname" class="message" [ngClass]="{'my_message': message.from === nickname, 'other_message': message.from !== nickname}">
         <span class="user_name-2">{{ message.from }}:</span><br>
-        <span>{{ message.text }}</span>
+        <span >{{ message.text }}</span>
         <div class="time-2">{{message.created_at | date:'dd.MM hh:MM'}}
-
+         
         </div>
       </ion-col>
 
     </ion-row>
   </ion-grid>
   <div id="end"></div>
+
 
 </ion-content>
 
